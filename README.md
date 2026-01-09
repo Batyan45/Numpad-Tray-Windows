@@ -6,6 +6,12 @@ Windows system tray numpad for when your number keys don't work.
 
 **Origin:** Born from a common Lenovo laptop issue where the keyboard behaves erratically, often leaving only the '5' and '6' keys working. This tool provides a reliable backup.
 
+## Screenshots
+
+| Classic Mode | Advanced Mode |
+|:---:|:---:|
+| ![Classic Mode](screenshots/classic.png) | ![Advanced Mode](screenshots/advanced.png) |
+
 ## Features
 
 - **Tray icon** - left-click to show/hide numpad
