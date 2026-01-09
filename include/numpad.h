@@ -1,7 +1,6 @@
 #pragma once
 
-#define UNICODE
-#define _UNICODE
+
 
 #include <windows.h>
 #include <shellapi.h>
@@ -103,3 +102,7 @@ void ResetPosition();
 // Popup dimensions
 int GetPopupWidth();
 int GetPopupHeight();
+
+// Hotkeys
+#define ID_TOGGLE_HOTKEYS 3000
+extern bool g_hotkeysEnabled;

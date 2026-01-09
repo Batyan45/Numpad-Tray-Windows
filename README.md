@@ -2,7 +2,7 @@
 
 ![Numpad Icon](icon/numpad.ico)
 
-Windows system tray numpad for when your number keys don't work.
+Windows system tray numpad and F1-F10 hotkey remapper for when your number keys don't work.
 
 **Origin:** Born from a common Lenovo laptop issue where the keyboard behaves erratically, often leaving only the '5' and '6' keys working. This tool provides a reliable backup.
 
@@ -20,6 +20,10 @@ Windows system tray numpad for when your number keys don't work.
 - **Two modes** (right-click menu):
   - **Classic**: 0-9
   - **Advanced**: 0-9 + 10 symbols
+- **Global Hotkeys** (Optional):
+  - Remap **F1-F10** to **1-0** universally
+  - Useful for laptops with broken number keys
+
 
 ## Build
 
@@ -36,6 +40,8 @@ cmake --build build --config Release
 | Click button | Send keystroke |
 | Drag popup | Move (saved) |
 | Right-click tray | Menu |
+
+> **Note:** For the global hotkeys (F1-F10 -> 1-0) to work correctly, your keyboard must be sending standard F1-F10 keycodes. If your laptop requires an **Fn key** (FnLock) to access F-keys (instead of media controls like brightness/volume), make sure **FnLock is enabled**.
 
 ## Layout
 

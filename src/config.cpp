@@ -15,6 +15,7 @@ int g_pressedButton = -1;
 bool g_customPosition = false;
 int g_savedX = 0;
 int g_savedY = 0;
+bool g_hotkeysEnabled = false;
 HWND g_lastActiveWindow = nullptr;
 
 std::wstring GetConfigPath() {
@@ -37,6 +38,8 @@ void LoadConfig() {
     g_customPosition = GetPrivateProfileIntW(L"Position", L"Custom", 0, path.c_str()) != 0;
     g_savedX = GetPrivateProfileIntW(L"Position", L"X", 0, path.c_str());
     g_savedY = GetPrivateProfileIntW(L"Position", L"Y", 0, path.c_str());
+
+    g_hotkeysEnabled = GetPrivateProfileIntW(L"Settings", L"Hotkeys", 0, path.c_str()) != 0;
 }
 
 void SaveConfig() {
@@ -53,6 +56,8 @@ void SaveConfig() {
     WritePrivateProfileStringW(L"Position", L"X", buffer, path.c_str());
     swprintf_s(buffer, L"%d", g_savedY);
     WritePrivateProfileStringW(L"Position", L"Y", buffer, path.c_str());
+
+    WritePrivateProfileStringW(L"Settings", L"Hotkeys", g_hotkeysEnabled ? L"1" : L"0", path.c_str());
 }
 
 void ResetPosition() {

@@ -1,4 +1,5 @@
 #include "numpad.h"
+#include "hotkeys.h"
 
 // External functions
 void ShowPopupWindow();
@@ -44,6 +45,12 @@ LRESULT CALLBACK HiddenWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
                                ID_MODE_CLASSIC, L"Classic (0-9)");
                     AppendMenuW(hMenu, MF_STRING | (g_currentMode == MODE_ADVANCED ? MF_CHECKED : 0), 
                                ID_MODE_ADVANCED, L"Advanced (symbols)");
+                    AppendMenuW(hMenu, MF_SEPARATOR, 0, nullptr);
+                    if (g_hotkeysEnabled) {
+                        AppendMenuW(hMenu, MF_STRING | MF_CHECKED, ID_TOGGLE_HOTKEYS, L"Hotkeys: F1-F10 -> 1-0");
+                    } else {
+                        AppendMenuW(hMenu, MF_STRING, ID_TOGGLE_HOTKEYS, L"Hotkeys: Disabled");
+                    }
                     AppendMenuW(hMenu, MF_SEPARATOR, 0, nullptr);
                     AppendMenuW(hMenu, MF_STRING, ID_RESET_POSITION, L"Reset Position");
                     AppendMenuW(hMenu, MF_SEPARATOR, 0, nullptr);
@@ -97,6 +104,15 @@ LRESULT CALLBACK HiddenWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
                         ShowPopupWindow();
                     }
                     break;
+                case ID_TOGGLE_HOTKEYS:
+                    g_hotkeysEnabled = !g_hotkeysEnabled;
+                    if (g_hotkeysEnabled) {
+                        StartKeyboardHook();
+                    } else {
+                        StopKeyboardHook();
+                    }
+                    SaveConfig();
+                    break;
             }
             return 0;
         
@@ -111,6 +127,9 @@ LRESULT CALLBACK HiddenWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int) {
     LoadConfig();
+    if (g_hotkeysEnabled) {
+        StartKeyboardHook();
+    }
 
     // Load Icon
     HICON hAppIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_TRAYICON));
@@ -178,6 +197,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, LPWSTR, int) {
     
     if (g_hFont) DeleteObject(g_hFont);
     if (g_hSymbolFont) DeleteObject(g_hSymbolFont);
+    
+    StopKeyboardHook();
     
     return (int)msg.wParam;
 }
